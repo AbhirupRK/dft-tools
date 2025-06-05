@@ -1,16 +1,18 @@
-#! python3
-#%%
-import io, os
+#%% This is a Streamlit web application for visualizing atomic magnetic moments from DFT output files.
+
+import io
 from pathlib import Path
-import numpy as np
 from modules.dft import ReadVaspOutput, ReadSiestaOutput
+import numpy as np
 from ase.io import write
 from ase import Atoms
 import py3Dmol
 import streamlit as st
 
+
 def read_markdown_file(markdown_file):
     return Path(markdown_file).read_text()
+
 
 def get_dft_output(uploaded_file, program):
     if uploaded_file is not None:
@@ -96,7 +98,6 @@ def plot_structure(structure, magmom, cell_vertices, cell_edges):
         view.setStyle({'sphere':{'radius':atom_size}, 'stick':{'radius':atom_size/4}})
     else:
         view.setStyle({'sphere':{'radius':atom_size}})
-    # view.setBackgroundColor('white')
 
     if plot_cell:
         colors = ['red', 'green', 'blue'] + ['black'] * (len(cell_edges)-3)  # Color for the unit cell lines
@@ -145,9 +146,12 @@ def plot_structure(structure, magmom, cell_vertices, cell_edges):
 
 st.set_page_config(layout="wide") # Optional: Use wide layout for better viewing
 
+# Defining Left and Right columns for the main layout
 main_col1, main_col2 = st.columns([0.6, 0.4]) # Main columns for the plot and inputs
 with main_col2:
     st.subheader("File Upload & Controls")
+    
+    # File uploader and DFT code selection
     file_col1, file_col2 = st.columns(2)
     with file_col1:
         uploaded_file = st.file_uploader("Upload DFT output file", type=None, key="uploaded_file")
@@ -189,6 +193,7 @@ with main_col2:
         st.session_state.setdefault("arrow_radius", default_values["arrow_radius"])
         st.session_state.setdefault("arrow_color", default_values["arrow_color"])
         
+        # Reset button and species selection
         with file_col2:
             if st.button("Reset to default", use_container_width=True):
                 for k, v in default_values.items():
@@ -200,7 +205,8 @@ with main_col2:
                     st.session_state["atom_size"] = st.session_state["atom_size"] - 0.0001
             
             species_to_plot = st.multiselect("Show species", options=dft_output.data['species'], key="species_to_plot")
-
+        
+        # Configuration options
         config_col1, config_col2, config_col3 = st.columns([7,7,10])
         with config_col1:
             plot_cell = st.checkbox("Unit cell", key="plot_cell")
@@ -208,13 +214,15 @@ with main_col2:
             plot_bonds = st.checkbox("Bonds", key="plot_bonds")
         with config_col3:
             plot_magmom = st.checkbox("Magnetic moments", key="plot_magmom")
-
+        
+        # Magnetic moment range
         magmom_col1, magmom_col2 = st.columns(2)
         with magmom_col1:
             min_magmom = st.number_input("Minimum magnetic moment", min_value=0.0, max_value=10.0, step=0.1, format='%0.4f', key="min_magmom")
         with magmom_col2:
             max_magmom = st.number_input("Maximum magnetic moment", min_value=0.0, max_value=10.0, step=0.1, format='%0.4f', key="max_magmom")
 
+        # Zoom factor and atom size
         atom_col1, atom_col2 = st.columns(2)
         with atom_col1:
             zoom_factor = st.number_input("Zoom factor", min_value=0.0, max_value=10.0, step=0.1, key="zoom_factor")
@@ -238,10 +246,11 @@ with main_col2:
             arrow_radius = st.number_input("Arrow radius", min_value=0.05, max_value=0.5, step=0.05, key="arrow_radius")
         with arr_col3:
             arrow_color = st.selectbox("Arrow color", options=["Red", "Green", "Blue", "Black"], key="arrow_color").lower()
-
+        
+        # Tips to drag figure position
         st.markdown(":violet-badge[:material/emoji_objects: Use **Ctrl + Click** to drag figure position]")
 
-
+# Main column for displaying the structure or app description
 with main_col1:
     if dft_output is not None:
         final_structure, final_magmom = process_atoms(dft_output, species_to_plot)
