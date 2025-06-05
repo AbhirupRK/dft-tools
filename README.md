@@ -1,6 +1,6 @@
 ## ⚛️ Magnetic Moment Visualizer
 
-Link to the app: [abhiruprk.streamlit.app](https://abhiruprk.streamlit.app/)
+Link to the app: [dft-tools.streamlit.app](https://dft-tools.streamlit.app/)
 
 ### 🚀 **How to Use:**
 
