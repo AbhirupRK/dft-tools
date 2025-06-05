@@ -170,8 +170,7 @@ with main_col2:
             "rot_y": 0,
             "rot_z": 15,
             "arrow_scale_factor": 10,
-            "arrow_radius": 0.3,
-            "arrow_color": "blue"
+            "arrow_radius": 0.3
         }
         st.session_state.setdefault("species_to_plot", default_values["species_to_plot"])
         st.session_state.setdefault("plot_cell", default_values["plot_cell"])
@@ -186,7 +185,6 @@ with main_col2:
         st.session_state.setdefault("rot_z", default_values["rot_z"])
         st.session_state.setdefault("arrow_scale_factor", default_values["arrow_scale_factor"])
         st.session_state.setdefault("arrow_radius", default_values["arrow_radius"])
-        st.session_state.setdefault("arrow_color", default_values["arrow_color"])
         
         
         with file_col2:
