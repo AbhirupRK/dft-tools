@@ -108,9 +108,9 @@ def plot_structure(structure, magmom, cell_vertices, cell_edges):
             view.addCylinder({
                 'start': {'x': float(p1[0]), 'y': float(p1[1]), 'z': float(p1[2])},
                 'end': {'x': float(p2[0]), 'y': float(p2[1]), 'z': float(p2[2])},
-                'radius': 0.08,        # Thickness of the unit cell lines
-                'color': colors[i],    # Color of the edges
-                'dashed': False        # Solid lines
+                'radius': cell_thickness,   # Thickness of the unit cell lines
+                'color': colors[i],         # Color of the edges
+                'dashed': False             # Solid lines
             })
 
     if plot_magmom:
@@ -170,6 +170,7 @@ with main_col2:
             "max_magmom": 1.0,
             "zoom_factor": 1.0,
             "atom_size": 0.7,
+            "cell_thickness": 0.06,
             "rot_x": -85,
             "rot_y": 0,
             "rot_z": 15,
@@ -186,6 +187,7 @@ with main_col2:
         st.session_state.setdefault("max_magmom", default_values["max_magmom"])
         st.session_state.setdefault("zoom_factor", default_values["zoom_factor"])
         st.session_state.setdefault("atom_size", default_values["atom_size"])
+        st.session_state.setdefault("cell_thickness", default_values["cell_thickness"])
         st.session_state.setdefault("rot_x", default_values["rot_x"])
         st.session_state.setdefault("rot_y", default_values["rot_y"])
         st.session_state.setdefault("rot_z", default_values["rot_z"])
@@ -223,11 +225,13 @@ with main_col2:
             max_magmom = st.number_input("Maximum magnetic moment", min_value=0.0, max_value=10.0, step=0.1, format='%0.4f', key="max_magmom")
 
         # Zoom factor and atom size
-        atom_col1, atom_col2 = st.columns(2)
+        atom_col1, atom_col2, atom_col3 = st.columns(3)
         with atom_col1:
             zoom_factor = st.number_input("Zoom factor", min_value=0.0, max_value=10.0, step=0.1, key="zoom_factor")
         with atom_col2:
             atom_size = st.number_input("Atom size", min_value=0.1, max_value=2.0, step=0.1, key="atom_size")
+        with atom_col3:
+            cell_thickness = st.number_input("Cell thickness", min_value=0.0, max_value=0.5, step=0.01, key="cell_thickness")
 
         # View angles
         rot_col1, rot_col2, rot_col3 = st.columns(3)
