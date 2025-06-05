@@ -22,5 +22,3 @@ This application simplifies the analysis of magnetic properties from DFT calcula
   * [**py3Dmol**](https://3dmol.csb.pitt.edu/) for interactive 3D visualizations.
   * [**Streamlit**](https://streamlit.io/) for the web app framework.
 
-Find the code on [GitHub](https://www.google.com/search?q=https://github.com/your-repo-link)\!
-

@@ -170,8 +170,10 @@ with main_col2:
             "rot_y": 0,
             "rot_z": 15,
             "arrow_scale_factor": 10,
-            "arrow_radius": 0.3
+            "arrow_radius": 0.3,
+            "arrow_color": "Blue"
         }
+
         st.session_state.setdefault("species_to_plot", default_values["species_to_plot"])
         st.session_state.setdefault("plot_cell", default_values["plot_cell"])
         st.session_state.setdefault("plot_bonds", default_values["plot_bonds"])
@@ -185,12 +187,18 @@ with main_col2:
         st.session_state.setdefault("rot_z", default_values["rot_z"])
         st.session_state.setdefault("arrow_scale_factor", default_values["arrow_scale_factor"])
         st.session_state.setdefault("arrow_radius", default_values["arrow_radius"])
-        
+        st.session_state.setdefault("arrow_color", default_values["arrow_color"])
         
         with file_col2:
             if st.button("Reset to default", use_container_width=True):
-                st.session_state.clear()
-                st.session_state.update(default_values)
+                for k, v in default_values.items():
+                    if k != "atom_size":
+                        st.session_state[k] = v
+                if st.session_state["atom_size"] <= default_values["atom_size"]:
+                    st.session_state["atom_size"] = st.session_state["atom_size"] + 0.0001
+                else:
+                    st.session_state["atom_size"] = st.session_state["atom_size"] - 0.0001
+            
             species_to_plot = st.multiselect("Show species", options=dft_output.data['species'], key="species_to_plot")
 
         config_col1, config_col2, config_col3 = st.columns([7,7,10])
@@ -229,9 +237,10 @@ with main_col2:
         with arr_col2:
             arrow_radius = st.number_input("Arrow radius", min_value=0.05, max_value=0.5, step=0.05, key="arrow_radius")
         with arr_col3:
-            arrow_color = st.selectbox("Arrow color", options=["Red", "Green", "Blue", "Black"], index=2, key="arrow_color").lower()
+            arrow_color = st.selectbox("Arrow color", options=["Red", "Green", "Blue", "Black"], key="arrow_color").lower()
 
         st.markdown(":violet-badge[:material/emoji_objects: Use **Ctrl + Click** to drag figure position]")
+
 
 with main_col1:
     if dft_output is not None:
@@ -241,5 +250,5 @@ with main_col1:
         st.components.v1.html(py3dmol_html, height=700, width=None, scrolling=False)
     else:
         st.markdown(read_markdown_file("about.md"), unsafe_allow_html=True)
-    
-#%% 
+
+#%%

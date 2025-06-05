@@ -17,7 +17,7 @@ Welcome! This app helps you visualize **atomic magnetic moments** from your **DF
 ### ℹ️ **About:**
 
 This app was created by Abhirup Roy Karmakar as part of his research.  
-The code can be found on ([GitHub](https://github.com/AbhirupRK/streamlit-app))\! It has the following dependencies:
+The source code is available on [GitHub](https://github.com/AbhirupRK/streamlit-app)\! It has the following dependencies:
 
   * [**ASE**](https://wiki.fysik.dtu.dk/ase/) (Atomic Simulation Environment) for handling atomic structures.
   * [**py3Dmol**](https://3dmol.csb.pitt.edu/) for interactive 3D visualizations.
