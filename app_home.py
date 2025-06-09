@@ -23,7 +23,8 @@ def get_dft_output(uploaded_file, program):
                 elif program.lower() == "siesta":
                     dft_output = ReadSiestaOutput(uploaded_file)
             except:
-                st.error(f"Couldn't find required information in the uploaded file. Please ensure that the {program} output file is correct or report issue to the developer.")
+                st.error(f"Couldn't find required information in the uploaded file. Please ensure that the {program.upper()} output file is correct or report issue to the developer.")
+                st.info(f"Make sure that the {program.upper()} calculation is either in spin-polarized or in non-collinear mode and includes the following options:  \n\nVASP:  \n`LORBIT = 11`  \n\nSIESTA:  \n`Charge.Mulliken  end`")
                 dft_output = None
 
         else:

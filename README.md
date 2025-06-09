@@ -14,6 +14,13 @@ Link to the app: [dft-tools.streamlit.app](https://dft-tools.streamlit.app/)
 * Magnetic moment arrows
 * Customizing view
 
+### 🎨 **Samples:**
+
+| Sample 1 | Sample 2 |
+|---------|---------|
+| ![Sample 1](samples/sample-1.png) | ![Sample 2](samples/sample-2.png) |
+
+
 ### ℹ️ **About:**
 
 This application simplifies the analysis of magnetic properties from DFT calculations. It uses:
