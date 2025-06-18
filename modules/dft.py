@@ -99,6 +99,10 @@ class ReadSiestaOutput:
                 while len(lines[j])>1:
                     linesplit = lines[j].split() ; j += 1
                     pos_cart.append(linesplit[1:4]) ; ion_types.append(linesplit[4])
+                ion_types = np.array(ion_types) ; pos_cart = np.array(pos_cart) # New
+                sorted_indices = np.argsort(ion_types) # New
+                ion_types = ion_types[sorted_indices] # New
+                pos_cart = pos_cart[sorted_indices] # New
                 elements, nions = np.unique(ion_types, return_counts=True)
                 self.data["nions"] = np.array(nions) ; natoms = sum(np.array(nions))
                 self.data["pos_cart"] = np.array(pos_cart).astype("float")*bohr2ang
@@ -125,6 +129,8 @@ class ReadSiestaOutput:
                         linesplit = lines[j].split() ; magmom.append(linesplit[4:7])
                 else:
                     print("ERROR: Incorret number of spin components !")
+                magmom = np.array(magmom) # New
+                magmom = magmom[sorted_indices] # New
                 self.data["magmom"] = np.array(magmom).astype("float")
 
     def _validate_keys(self):
